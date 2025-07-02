@@ -27,7 +27,35 @@ Rocky Linux (RHEL系)は企業用のosで最小限の機能しか備わってい
 ```bash
 sudo dnf install ibus ibus-mozc langpacks-ja
 ```
-### 
+そのあと設定画面開いて Keyboard/入力ソース で「日本語(Mozc)」を選ぶ.
+
+## SSH接続設定
+研究室外のネットワークからリモート接続するために設定する. サーバー側にOpenSSHがインストールされていたら簡単にsshの設定が行えた.
+#　手順
+1. サーバー側の確認・準備
+```bash
+which sshd
+```
+2. SSHサーバーが起動中か確認
+```bash
+sudo systemctl status sshd
+```
+- 出力結果が緑色の丸が見えてactive(runing)ならOK!
+
+3. ファイアーウォールでSSHを許可
+```bash
+sudo firewall-cmd --permanent --add-service==ssh
+sudo firewall-cmd --reload
+```
+4. サーバーのIPアドレス確認
+```bash
+ip a
+```
+5. 確認したアドレスを元にクライアントの方からssh接続
+```bash
+ssh usrname@XXXX.XX.XX
+```
+- この時, クライアント側で`/etc/hosts`に`XXXX.XX.XX pcname`と編集すると接続が`usrname@pcname`と楽になる.
 
 ## Intel oneAPI(Base ToolKit, HPC ToolKit)のインストール
 - BaseKitとHPCKitをインストールすることで, 高性能計算(HPC)や科学技術計算, AI/ディープラーニングの開発などの環境が整う.
